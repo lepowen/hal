@@ -77,8 +77,8 @@ if "deck" not in st.session_state:
         for card in range(1, 14):
             for _ in range(4):
                 deck.append(card)
-        random.shuffle(deck)
-
+    random.shuffle(deck)
+    
     st.session_state.deck = deck
     st.session_state.used_cards = []
     st.session_state.round_count = 0
@@ -109,7 +109,7 @@ if st.button("模擬下一局勝率"):
             )
             if len(st.session_state.deck) < 6:
                 st.warning("剩餘牌數不足，模擬結束")
-        else:
+            else:
                 st.info(f"第 {st.session_state.round_count} 局模擬中...")
 
             start = time.time()
@@ -138,7 +138,7 @@ if st.button("模擬下一局勝率"):
             elif gap < 0.005:
                 level = "中信心"
                 mood = "稍有優勢，穩紮穩打"
-        else:
+            else:
                 level = "高信心"
                 mood = "強烈推薦，大膽出手！"
                 st.info(f"信心等級：{level} | 💬 {mood}")
@@ -167,14 +167,14 @@ def simulate_with_draw_split(deck, simulations_per_round=10000, rounds=10):
     total_tie = 0
 
     for _ in range(rounds):
-        player_win = 0
-        banker_win = 0
-        tie = 0
+    player_win = 0
+    banker_win = 0
+    tie = 0
 
-        temp_deck = deck.copy()
+    temp_deck = deck.copy()
     for _ in range(simulations_per_round):
         if len(temp_deck) < 6:
-        temp_deck = deck.copy()
+            temp_deck = deck.copy()
         random.shuffle(temp_deck)
 
         player_cards = [temp_deck.pop(), temp_deck.pop()]
@@ -188,8 +188,8 @@ def simulate_with_draw_split(deck, simulations_per_round=10000, rounds=10):
 
         player_third_card = None
         if player_total <= 5:
-        player_third_card = baccarat_value(temp_deck.pop())
-        player_total = (player_total + player_third_card) % 10
+            player_third_card = baccarat_value(temp_deck.pop())
+            player_total = (player_total + player_third_card) % 10
 
         def banker_should_draw(bt, ptc):
             if bt >= 7:
@@ -208,10 +208,10 @@ def simulate_with_draw_split(deck, simulations_per_round=10000, rounds=10):
 
         if player_third_card is None:
             if banker_total <= 5:
-        banker_total = (banker_total + baccarat_value(temp_deck.pop())) % 10
+                banker_total = (banker_total + baccarat_value(temp_deck.pop())) % 10
         else:
             if banker_should_draw(banker_total, player_third_card):
-        banker_total = (banker_total + baccarat_value(temp_deck.pop())) % 10
+                banker_total = (banker_total + baccarat_value(temp_deck.pop())) % 10
 
         if player_total > banker_total:
             player_win += 1
@@ -224,11 +224,11 @@ def simulate_with_draw_split(deck, simulations_per_round=10000, rounds=10):
     total_banker_win += banker_win
     total_tie += tie
 
-    total = total_player_win + total_banker_win + total_tie
-    return {
-        "Player Win Rate": total_player_win / total,
-        "Banker Win Rate": total_banker_win / total,
-        "Tie Rate": total_tie / total
+total = total_player_win + total_banker_win + total_tie
+return {
+    "Player Win Rate": total_player_win / total,
+    "Banker Win Rate": total_banker_win / total,
+    "Tie Rate": total_tie / total
 }
 
 # 顯示主畫面
@@ -249,7 +249,7 @@ with tab1:
             created_time = data.get("created_at", "(未記錄)")
             last_login = data.get("last_login", "(從未登入)")
             st.write(f"👤 `{user}` - 權限：{data.get('role', 'user')} - 建立：{created_time} - 最後登入：{last_login}")
-        else:
+    else:
         st.write("目前尚無使用者資料。")
 
     st.divider()
@@ -264,7 +264,7 @@ with tab1:
                 st.warning("❗ 此帳號已存在")
             elif len(new_pass) < 6:
                 st.warning("❗ 密碼請至少6位數")
-        else:
+            else:
                 hashed_pw = bcrypt.hashpw(new_pass.encode(), bcrypt.gensalt()).decode()
                 users[new_user] = {
                     "password": hashed_pw,
@@ -286,10 +286,10 @@ with tab1:
                 with open(USER_FILE, "w") as f:
                     json.dump(users, f)
                 st.success(f"✅ `{del_user}` 已被刪除")
-        else:
+    else:
         st.info("（無可刪除的其他帳號）")
 
-        else:
+else:
     show_simulator_tab()
 show_simulator_tab()
 # AI樣式判斷規則（五局模式 + 推薦下注）
@@ -376,7 +376,7 @@ def show_trend_ai_tab():
     if pattern == ai_pattern:
         st.success(f"✨ AI建議：建議第六局下注【{ai_suggestion}】！{ai_message}")
         break
-        else:
+    else:
     st.warning("📉 AI提示：目前無明顯趨勢，請小心操作")
 
 
