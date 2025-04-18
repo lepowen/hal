@@ -1,0 +1,8 @@
+{
+    "john123": {
+        "password": "$2b$12$gyLQcNJVTJ.bm.MuVOP79ezfV4vAg8uKwSDNQuowwj576LkQwiUnK",
+        "role": "admin",
+        "created_at": "2025-04-17T18:35:50.968929",
+        "last_login": ""
+    }
+}
